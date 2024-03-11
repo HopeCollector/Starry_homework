@@ -316,6 +316,7 @@ impl TcpSocket {
                     let len = socket
                         .recv_slice(buf)
                         .map_err(|_| ax_err_type!(BadState, "socket recv() failed"))?;
+	    error!("RECEIVED: {:?}", core::str::from_utf8(&buf[..len]).unwrap());
                     Ok(len)
                 } else if !socket.is_active() {
                     // not open
@@ -392,6 +393,8 @@ impl TcpSocket {
                     let len = socket
                         .send_slice(buf)
                         .map_err(|_| ax_err_type!(BadState, "socket send() failed"))?;
+
+	error!("To SEND: {:?}", core::str::from_utf8(buf).unwrap());
                     Ok(len)
                 } else {
                     // tx buffer is full

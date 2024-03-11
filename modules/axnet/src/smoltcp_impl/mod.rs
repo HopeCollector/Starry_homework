@@ -270,7 +270,7 @@ impl<'a> RxToken for AxNetRxToken<'a> {
         F: FnOnce(&mut [u8]) -> R,
     {
         let mut rx_buf = self.1;
-        trace!(
+        warn!(
             "RECV {} bytes: {:02X?}",
             rx_buf.packet_len(),
             rx_buf.packet()
@@ -289,7 +289,7 @@ impl<'a> TxToken for AxNetTxToken<'a> {
         let mut dev = self.0.borrow_mut();
         let mut tx_buf = dev.alloc_tx_buffer(len).unwrap();
         let ret = f(tx_buf.packet_mut());
-        trace!("SEND {} bytes: {:02X?}", len, tx_buf.packet());
+        warn!("SEND {} bytes: {:02X?}", len, tx_buf.packet());
         dev.transmit(tx_buf).unwrap();
         ret
     }
@@ -365,10 +365,10 @@ pub(crate) fn init(_net_dev: AxNetDevice) {
         eth0.setup_gateway(gateway);
 
         ETH0.init_by(eth0);
-        error!("created net interface {:?}:", ETH0.name());
-        error!("  ether:    {}", ETH0.ethernet_address());
-        error!("  ip:       {}/{}", ip, IP_PREFIX);
-        error!("  gateway:  {}", gateway);
+        warn!("created net interface {:?}:", ETH0.name());
+        warn!("  ether:    {}", ETH0.ethernet_address());
+        warn!("  ip:       {}/{}", ip, IP_PREFIX);
+        warn!("  gateway:  {}", gateway);
     }
 
     SOCKET_SET.init_by(SocketSetWrapper::new());

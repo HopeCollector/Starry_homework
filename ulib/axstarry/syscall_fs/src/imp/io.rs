@@ -342,7 +342,7 @@ pub fn syscall_openat(fd: usize, path: *const u8, flags: usize, _mode: u8) -> Sy
 ///     - fd：要关闭的文件描述符。
 /// 返回值：成功执行，返回0。失败，返回-1。
 pub fn syscall_close(fd: usize) -> SyscallResult {
-    axlog::warn!("Into syscall_close. fd: {}", fd);
+    axlog::info!("Into syscall_close. fd: {}", fd);
     yield_now();
 
     let process = current_process();

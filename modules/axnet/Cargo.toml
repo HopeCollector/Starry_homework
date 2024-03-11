@@ -12,7 +12,7 @@ documentation = "https://rcore-os.github.io/arceos/axnet/index.html"
 [features]
 smoltcp = []
 
-# 启用ip协议与否
+# 启用loopback, ip协议与否
 ip = []
 
 default = ["smoltcp"]

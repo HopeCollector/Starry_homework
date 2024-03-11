@@ -45,7 +45,7 @@ pub fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
     let ans = deal_result(ans);
     if ans < 0
     {
-        axlog::warn!("here return an error!!!");
+        axlog::warn!("syscall return an error: {:?}", ans);
     }
     axlog::info!("[tid: {:?}]syscall: {} -> {}", current_task().id(), syscall_id, ans);
     ans

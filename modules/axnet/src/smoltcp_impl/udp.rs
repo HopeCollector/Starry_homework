@@ -167,6 +167,7 @@ impl UdpSocket {
     /// Sends data on the socket to the remote address to which it is connected.
     pub fn send(&self, buf: &[u8]) -> AxResult<usize> {
         let remote_endpoint = self.remote_endpoint()?;
+	error!("To SEND: {:?}", core::str::from_utf8(buf).unwrap());
         self.send_impl(buf, remote_endpoint)
     }
 
@@ -184,6 +185,7 @@ impl UdpSocket {
             if remote_endpoint.port != 0 && remote_endpoint.port != meta.endpoint.port {
                 return Err(AxError::WouldBlock);
             }
+	    error!("RECEIVED: {:?}", core::str::from_utf8(&buf[..len]).unwrap());
             Ok(len)
         })
     }

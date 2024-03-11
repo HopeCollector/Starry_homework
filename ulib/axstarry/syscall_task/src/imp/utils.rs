@@ -85,7 +85,7 @@ pub fn syscall_settimer(
         Err(_) => return Err(SyscallError::EFAULT),
     };
 
-    axlog::error!("setitimer {:#x?}", new_value);
+    axlog::info!("setitimer {:#x?}", new_value);
 
     if !old_value.is_null() {
         if process.manual_alloc_type_for_lazy(old_value).is_err() {
@@ -102,7 +102,7 @@ pub fn syscall_settimer(
         new_value.it_interval.to_nanos(),
         new_value.it_value.to_nanos(),
     );
-    axlog::error!("interval: {:#x}, remained_ns: {:#x}", time_interval_ns, time_remained_ns);
+    axlog::info!("interval: {:#x}, remained_ns: {:#x}", time_interval_ns, time_remained_ns);
     if current_task().set_timer(time_interval_ns, time_remained_ns, which) {
         Ok(0)
     } else {

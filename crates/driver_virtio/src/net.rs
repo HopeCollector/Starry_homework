@@ -136,6 +136,8 @@ impl<H: Hal, T: Transport, const QS: usize> NetDriverOps for VirtIoNetDev<H, T, 
                     .transmit_complete(token, tx_buf.packet_with_header())
                     .map_err(as_dev_err)?;
             }
+		log::warn!("TX len:{}", tx_buf.packet_with_header().len());
+
             // Recycle the buffer.
             self.free_tx_bufs.push(tx_buf);
         }
@@ -168,6 +170,7 @@ impl<H: Hal, T: Transport, const QS: usize> NetDriverOps for VirtIoNetDev<H, T, 
             };
             rx_buf.set_header_len(hdr_len);
             rx_buf.set_packet_len(pkt_len);
+		log::warn!("RX len:{}", hdr_len + pkt_len);
 
             Ok(rx_buf.into_buf_ptr())
         } else {
